@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beleza em Unhas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Beleza em Unhas</h1>
+        <nav>
+            <a href="#servicos">Serviços</a>
+            <a href="#agendamento">Agendar</a>
+            <a href="#login">Login</a>
+            <a href="#cadastro">Cadastro</a>
+        </nav>
+    </header>
+
+    <div class="content">
+        <section id="servicos">
+            <h2>Serviços Oferecidos</h2>
+            <p>Oferecemos serviços de manicure, pedicure, unhas em gel e design de sobrancelhas.</p>
+            <ul>
+                <li>Unhas em Gel</li>
+                <li>Manicure Completa</li>
+                <li>Pedicure Relaxante</li>
+                <li>Design de Sobrancelhas</li>
+            </ul>
+        </section>
+
+        <section id="agendamento">
+            <h2>Agendamento de Serviços</h2>
+            <form id="agendamento-form">
+                <div class="form-group">
+                    <label for="servico">Serviço:</label>
+                    <select id="servico" required>
+                        <option value="">Selecione um serviço</option>
+                        <option value="unhas_em_gel">Unhas em Gel</option>
+                        <option value="manicure">Manicure Completa</option>
+                        <option value="pedicure">Pedicure Relaxante</option>
+                        <option value="design_sobrancelhas">Design de Sobrancelhas</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="data">Data:</label>
+                    <input type="date" id="data" required>
+                </div>
+                <div class="form-group">
+                    <label for="hora">Hora:</label>
+                    <input type="time" id="hora" required>
+                </div>
+                <button type="submit" class="button">Agendar</button>
+            </form>
+            <div id="agendamento-message" class="message"></div>
+        </section>
+
+        <section id="login">
+            <h2>Login</h2>
+            <div class="form-group">
+                <label for="login-username">Usuário:</label>
+                <input type="text" id="login-username" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Senha:</label>
+                <input type="password" id="login-password" required>
+            </div>
+            <button class="button" onclick="login()">Entrar</button>
+            <div id="login-message" class="message"></div>
+        </section>
+
+        <section id="cadastro">
+            <h2>Cadastro</h2>
+            <div class="form-group">
+                <label for="new-username">Usuário:</label>
+                <input type="text" id="new-username" required>
+            </div>
+            <div class="form-group">
+                <label for="new-password">Senha:</label>
+                <input type="password" id="new-password" required>
+            </div>
+            <button class="button" onclick="cadastrar()">Cadastrar</button>
+            <div id="cadastro-message" class="message"></div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Beleza em Unhas. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const users = [];
+
+        function cadastrar() {
+            const username = document.getElementById('new-username').value;
+            const password = document.getElementById('new-password').value;
+
+            if (users.some(user => user.username === username)) {
+                document.getElementById('cadastro-message').textContent = 'Usuário já cadastrado!';
+            } else {
+                users.push({ username, password });
+                document.getElementById('cadastro-message').textContent = 'Usuário cadastrado com sucesso!';
+                document.getElementById('new-username').value = '';
+                document.getElementById('new-password').value = '';
+            }
+        }
+
+        function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            const user = users.find(user => user.username === username && user.password === password);
+
+            if (user) {
+                document.getElementById('login-message').textContent = 'Login realizado com sucesso!';
+            } else {
+                document.getElementById('login-message').textContent = 'Usuário ou senha inválidos!';
+            }
+        }
+
+        document.getElementById('agendamento-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            const servico = document.getElementById('servico').value;
+            const data = document.getElementById('data').value;
+            const hora = document.getElementById('hora').value;
+
+            // Exibe a mensagem de sucesso
+            document.getElementById('agendamento-message').textContent = `Serviço agendado: ${servico} para ${data} às ${hora}.`;
+
+            // Limpa o formulário após o envio
+            this.reset();
+        });
+    </script>
+</body>
+</html>
